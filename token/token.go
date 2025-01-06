@@ -9,8 +9,13 @@ type Token struct {
 
 // keywordMap maps literals to language keywords
 var keywordMap = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
+	"true":   TRUE,
+	"false":  FALSE,
 }
 
 // GetIdentifierTypeByValue translates identifier values to token types

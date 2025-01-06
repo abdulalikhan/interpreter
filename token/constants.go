@@ -8,8 +8,16 @@ const (
 	INT = "INT"
 
 	// Operators
-	ASSIGN = "="
-	PLUS   = "+"
+	ASSIGN   = "="
+	PLUS     = "+"
+	MINUS    = "-"
+	ASTERISK = "*"
+	SLASH    = "/"
+	NEG      = "!"
+	LT       = "<"
+	GT       = ">"
+	EQ       = "=="
+	NEQ      = "!="
 
 	// Delimiters
 	COMMA     = ","
@@ -23,6 +31,11 @@ const (
 	// Keywords
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
 
 	// Special types
 	ILLEGAL = "ILLEGAL"
