@@ -31,6 +31,22 @@ func (l *Lexer) readChar() {
 	l.nextIndex++
 }
 
+// peekNext enables the lexer to look at the next token - this handles multi-character tokens
+func (l *Lexer) peekNext() byte {
+	if l.nextIndex >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.nextIndex]
+	}
+}
+
+func (l *Lexer) newTwoCharToken(tokenType token.TokenType) token.Token {
+	firstChar := l.currChar
+	l.readChar()
+	tokenVal := string(firstChar) + string(l.currChar)
+	return token.Token{Type: tokenType, Value: tokenVal}
+}
+
 func newToken(tokenType token.TokenType, value byte) token.Token {
 	return token.Token{Type: tokenType, Value: string(value)}
 }
@@ -87,7 +103,17 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.currChar {
 	case '=':
-		nextToken = newToken(token.ASSIGN, l.currChar)
+		if l.peekNext() == '=' {
+			nextToken = l.newTwoCharToken(token.EQ)
+		} else {
+			nextToken = newToken(token.ASSIGN, l.currChar)
+		}
+	case '!':
+		if l.peekNext() == '=' {
+			nextToken = l.newTwoCharToken(token.NEQ)
+		} else {
+			nextToken = newToken(token.NEG, l.currChar)
+		}
 	case ';':
 		nextToken = newToken(token.SEMICOLON, l.currChar)
 	case '(':
@@ -100,6 +126,16 @@ func (l *Lexer) NextToken() token.Token {
 		nextToken = newToken(token.RBRACE, l.currChar)
 	case '+':
 		nextToken = newToken(token.PLUS, l.currChar)
+	case '-':
+		nextToken = newToken(token.MINUS, l.currChar)
+	case '*':
+		nextToken = newToken(token.ASTERISK, l.currChar)
+	case '<':
+		nextToken = newToken(token.LT, l.currChar)
+	case '>':
+		nextToken = newToken(token.GT, l.currChar)
+	case '/':
+		nextToken = newToken(token.SLASH, l.currChar)
 	case ',':
 		nextToken = newToken(token.COMMA, l.currChar)
 	case 0:

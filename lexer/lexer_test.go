@@ -8,11 +8,16 @@ import (
 
 func TestNextToken(t *testing.T) {
 	input := `let number_a = 2;
-			  let number_b = 3;
-			  let sum = fn(a, b) {
-			  	a + b;
-			  };
-			  let result = sum(number_a, number_b);`
+			let number_b = 3;
+			let sum = fn(a, b) {
+			  a + b;
+			};
+			let result = sum(number_a, number_b);
+      if (result == 5) {
+        return true;
+      } else {
+        return false;
+      }`
 
 	testCases := []struct {
 		expectedTokenType token.TokenType
@@ -54,6 +59,23 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "number_b"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
+		{token.IF, "if"},
+		{token.LPAREN, "("},
+		{token.IDENT, "result"},
+		{token.EQ, "=="},
+		{token.INT, "5"},
+		{token.RPAREN, ")"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.TRUE, "true"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
+		{token.ELSE, "else"},
+		{token.LBRACE, "{"},
+		{token.RETURN, "return"},
+		{token.FALSE, "false"},
+		{token.SEMICOLON, ";"},
+		{token.RBRACE, "}"},
 		{token.EOF, ""},
 	}
 
